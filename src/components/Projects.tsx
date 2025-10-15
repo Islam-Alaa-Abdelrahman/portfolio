@@ -35,7 +35,7 @@ const projects: Omit<Project, 'media'>[] = [
       "PayPal payment integration",
       "Admin dashboard with analytics & user management"
     ],
-    demoUrl: '#',
+    demoUrl: 'https://fullashes.vercel.app/',
     sourceUrl: '#'
   }
   // You can add more projects here following the same structure
