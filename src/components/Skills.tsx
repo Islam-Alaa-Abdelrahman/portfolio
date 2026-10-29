@@ -1,70 +1,56 @@
-'use client'
-
-import { motion } from 'framer-motion'
-
-const SkillCategory = ({ title, skills }: { title: string; skills: string[] }) => (
-  <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm">
-    <h3 className="text-xl font-semibold mb-4">{title}</h3>
-    <div className="flex flex-wrap gap-2">
-      {skills.map((skill, index) => (
-        <span
-          key={index}
-          className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-full text-sm"
-        >
-          {skill}
-        </span>
-      ))}
-    </div>
-  </div>
-)
-
+const capabilities = [
+  {
+    title: "The experience.",
+    text: "Interfaces that are responsive, clear, and considered.",
+    skills: "React / Next.js / TypeScript / JavaScript",
+    number: "01",
+  },
+  {
+    title: "The engine.",
+    text: "Application logic and data that make it all work.",
+    skills: "PHP / Laravel / .NET / SQL / MongoDB",
+    number: "02",
+  },
+  {
+    title: "The thinking.",
+    text: "Debugging, algorithm analysis, and collaborative problem-solving.",
+    skills: "C / C++ / Java / Agile development",
+    number: "03",
+  },
+];
 export default function Skills() {
-  const skillCategories = [
-    {
-      title: "Web Development",
-      skills: ["Next.js", "React", "TypeScript", "Laravel", ".NET", "PHP", "JavaScript"]
-    },
-    {
-      title: "Backend & Database",
-      skills: ["Node.js", "SQL", "MongoDB", "Mongoose"]
-    },
-    {
-      title: "Programming Languages",
-      skills: ["C", "C++", "Java", "PHP", "JavaScript", "TypeScript"]
-    },
-    {
-      title: "Other Skills",
-      skills: ["Agile Development", "Debugging", "Problem Solving", "Algorithm Analysis"]
-    }
-  ]
-
   return (
-    <section id="skills" className="section-padding">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-3xl font-bold mb-8">Skills & Expertise</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {skillCategories.map((category, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <SkillCategory title={category.title} skills={category.skills} />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+    <section
+      className="skills-section"
+      id="skills"
+      aria-labelledby="skills-heading"
+    >
+      <div className="shell">
+        <div className="section-label">
+          <span>03 / HOW I BUILD</span>
+          <span>THE WHOLE STACK. THE SMALL DETAILS.</span>
+        </div>
+        <div className="skills-heading">
+          <h2 id="skills-heading">
+            From what you see
+            <br />
+            to what <em>makes it work.</em>
+          </h2>
+          <span className="capability-symbol" aria-hidden="true">
+            ↳
+          </span>
+        </div>
+        <div className="capability-list">
+          {capabilities.map((item) => (
+            <article key={item.number}>
+              <span className="capability-number">/{item.number}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+              <span className="capability-tools">{item.skills}</span>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
-  )
+  );
 }

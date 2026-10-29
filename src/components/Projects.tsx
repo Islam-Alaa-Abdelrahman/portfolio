@@ -1,177 +1,149 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { FiGithub, FiExternalLink, FiImage } from 'react-icons/fi'
-import { useState } from 'react'
-import ProjectGallery from './ProjectGallery'
+import { useState } from "react";
+import Image from "next/image";
+import Arrow from "./Arrow";
+import ProjectGallery from "./ProjectGallery";
+import { getProjectMedia } from "@/utils/mediaUtils";
 
-// Example project images (replace with your actual project images/videos)
-// Import Project type
-import { Project } from '@/types/Project'
-import { getProjectMedia } from '@/utils/mediaUtils'
-
-const projects: Omit<Project, 'media'>[] = [
-  {
-    id: 'beauty-shop',
-    title: 'Beauty Shop E-Commerce Platform',
-    description: 'A full-stack e-commerce platform specializing in cosmetics and beauty products. Built with modern technologies and best practices.',
-    techStack: [
-      "Next.js 14",
-      "React 18",
-      "TypeScript",
-      "Tailwind CSS",
-      "MongoDB",
-      "NextAuth.js",
-      "Cloudinary",
-      "PayPal SDK",
-      "Framer Motion",
-      "Chart.js"
-    ],
-    features: [
-      "Product catalog with search, filtering, sorting",
-      "Secure user authentication & profile management",
-      "Shopping cart & order tracking",
-      "PayPal payment integration",
-      "Admin dashboard with analytics & user management"
-    ],
-    demoUrl: 'https://fullashes.vercel.app/',
-    sourceUrl: '#'
-  }
-  // You can add more projects here following the same structure
-]
-
-// Get media for each project
-const projectsWithMedia: Project[] = projects.map(project => ({
-  ...project,
-  media: getProjectMedia(project.id)
-}))
-
-interface ProjectCardProps {
-  project: Project;
-}
-
-const ProjectCard = ({ project }: ProjectCardProps) => {
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false)
-
-  return (
-    <>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="bg-white dark:bg-gray-900 rounded-lg shadow-sm overflow-hidden"
-      >
-        <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-          <Image
-            src={project.media[0].src}
-            alt={project.media[0].alt}
-            fill
-            className="object-contain"
-            quality={100}
-            sizes="100vw"
-            priority
-            loading="eager"
-            unoptimized
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-            <button
-              onClick={() => setIsGalleryOpen(true)}
-              className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg hover:bg-white/30 transition-colors flex items-center gap-2"
-            >
-              <FiImage className="w-5 h-5" />
-              View Gallery ({project.media.length})
-            </button>
-          </div>
-        </div>
-
-        <div className="p-6">
-          <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-          
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            {project.description}
-          </p>
-
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-semibold mb-2">Tech Stack:</h4>
-              <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-full text-sm"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-2">Key Features:</h4>
-              <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
-                {project.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex gap-4 mt-6">
-              <button
-                onClick={() => setIsGalleryOpen(true)}
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-              >
-                <FiImage className="w-5 h-5" />
-                <span>View Gallery</span>
-              </button>
-              {project.demoUrl && (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-                >
-                  <FiExternalLink className="w-5 h-5" />
-                  <span>Live Demo</span>
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Add console.log to debug media */}
-      {console.log('Project media:', project.media)}
-      <ProjectGallery
-        isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
-        images={project.media}
-      />
-    </>
-  )
-}
+const media = getProjectMedia("beauty-shop");
+const stack = [
+  "Next.js",
+  "React",
+  "TypeScript",
+  "MongoDB",
+  "NextAuth.js",
+  "PayPal",
+  "Cloudinary",
+];
 
 export default function Projects() {
+  const [galleryOpen, setGalleryOpen] = useState(false);
   return (
-    <section id="projects" className="section-padding bg-gray-50 dark:bg-gray-800">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-3xl font-bold mb-8">Featured Projects</h2>
-          
-          <div className="space-y-12">
-            {projectsWithMedia.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
+    <section
+      className="work-section"
+      id="projects"
+      aria-labelledby="work-heading"
+    >
+      <div className="shell">
+        <div className="section-label">
+          <span>01 / SELECTED WORK</span>
+          <span>IDEA → INTERFACE → IMPLEMENTATION</span>
+        </div>
+        <div className="work-heading">
+          <h2 id="work-heading">
+            Less talk.
+            <br />
+            <em>More built.</em>
+          </h2>
+          <p>
+            One project. Many moving parts.
+            <br />A look at how I bring them together.
+          </p>
+        </div>
+        <article className="featured-project">
+          <div className="project-title-row">
+            <div>
+              <h3>
+                Fullashes<span>01</span>
+              </h3>
+              <p>Beauty e-commerce / Full-stack development</p>
+            </div>
+            <a
+              href="https://fullashes.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-visit"
+            >
+              Visit website <Arrow diagonal />
+            </a>
           </div>
-        </motion.div>
+          <button
+            className="project-canvas"
+            onClick={() => setGalleryOpen(true)}
+            aria-label="Open Fullashes screenshot gallery"
+          >
+            <div className="project-browser">
+              <div className="browser-bar">
+                <span>● ● ●</span>
+                <span>fullashes.vercel.app</span>
+                <span>↗</span>
+              </div>
+              <Image
+                src="/projects/beauty-shop/media/Screenshot_24.png"
+                alt="Fullashes original storefront, featuring beauty products and the collection entry point"
+                width={1905}
+                height={935}
+                sizes="(max-width: 760px) 90vw, 80vw"
+              />
+            </div>
+            <span className="canvas-caption">ACTUAL PROJECT / STOREFRONT</span>
+            <span className="gallery-trigger">
+              Explore screenshots <Arrow diagonal />
+            </span>
+          </button>
+          <div className="project-story">
+            <div>
+              <span className="mini-label">THE BUILD</span>
+              <p>
+                A complete shopping journey, with a product catalog, secure
+                accounts, cart and order tracking, PayPal payments, and an admin
+                dashboard.
+              </p>
+            </div>
+            <div>
+              <span className="mini-label">UNDER THE HOOD</span>
+              <div className="tech-list">
+                {stack.map((tech) => (
+                  <span key={tech}>{tech}</span>
+                ))}
+              </div>
+              <button
+                onClick={() => setGalleryOpen(true)}
+                className="underlined-link"
+              >
+                View all {media.length} screens <Arrow />
+              </button>
+            </div>
+          </div>
+          <details className="project-details">
+            <summary>
+              <span>Inside the implementation</span>
+              <span className="details-plus" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <div className="implementation-grid">
+              <div>
+                <h4>Find & discover</h4>
+                <p>
+                  Search, category filters, and sorting help customers explore
+                  the product catalog.
+                </p>
+              </div>
+              <div>
+                <h4>Account & checkout</h4>
+                <p>
+                  User authentication, profile management, shopping cart,
+                  payments, and order tracking connect the purchase journey.
+                </p>
+              </div>
+              <div>
+                <h4>Manage & maintain</h4>
+                <p>
+                  An admin dashboard brings analytics and user management into
+                  the same application.
+                </p>
+              </div>
+            </div>
+          </details>
+        </article>
       </div>
+      <ProjectGallery
+        isOpen={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        images={media}
+      />
     </section>
-  )
+  );
 }
