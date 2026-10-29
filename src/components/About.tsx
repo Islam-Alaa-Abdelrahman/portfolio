@@ -1,66 +1,42 @@
-'use client'
-
-import { motion } from 'framer-motion'
-
 export default function About() {
   return (
-    <section id="about" className="section-padding bg-gray-50 dark:bg-gray-800">
+    <section id="about" className="section-padding">
       <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto"
-        >
+        <div className="content-width">
           <h2 className="text-3xl font-bold mb-8">About Me</h2>
-          
-          <div className="space-y-6 text-gray-600 dark:text-gray-300">
-            <p>
-              Passionate software engineer with a strong foundation in software engineering
-              and web application development. I specialize in creating modern, efficient,
-              and user-friendly applications using cutting-edge technologies.
-            </p>
-
+          <p className="text-gray-600 dark:text-gray-300 mb-8">
+            I’m a software engineer based in Dubai with two years of freelance
+            web development experience and ongoing work on Parkida. I enjoy
+            taking a practical problem from requirements through interface
+            design, backend integration, testing, and deployment.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Education</h3>
-              <p>
-                Bachelor's in Software Engineering from Eastern Mediterranean University (EMU), Cyprus
+              <h3 className="text-xl font-semibold mb-3">Education</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Bachelor’s in Software Engineering
                 <br />
-                <span className="text-blue-600 dark:text-blue-400">ABET Accredited Program</span>
+                Eastern Mediterranean University (EMU), Cyprus
+              </p>
+              <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
+                ABET-accredited program
               </p>
             </div>
-
             <div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Professional Strengths</h3>
-              <ul className="list-disc list-inside space-y-2">
-                <li>Strong analytical and problem-solving abilities</li>
-                <li>Excellent teamwork and collaboration skills</li>
-                <li>High adaptability and flexibility</li>
-                <li>Fast learner with a passion for new technologies</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Certifications</h3>
-              <ul className="list-disc list-inside space-y-2">
-                <li>Microsoft Power Platform Fundamentals</li>
-                <li>ABET Accreditation in Engineering & Technology</li>
-                <li>Member of the Society of Engineers – UAE</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Passions</h3>
-              <ul className="list-disc list-inside space-y-2">
-                <li>Mentoring & helping others learn</li>
-                <li>Taking on coding challenges</li>
-                <li>Continuous skill development</li>
-              </ul>
+              <h3 className="text-xl font-semibold mb-3">Certification</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Microsoft Power Platform Fundamentals
+              </p>
+              <h3 className="text-xl font-semibold mt-6 mb-3">
+                Beyond development
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                English & Arabic · Chess & football
+              </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
-  )
+  );
 }
