@@ -476,6 +476,12 @@ h2 em {
   line-height: 1.9;
   margin-bottom: 8px;
 }
+.featured-project + .featured-project {
+  margin-top: clamp(64px, 8vw, 120px);
+}
+.project-canvas.civic-canvas {
+  background: #d9e2e7;
+}
 .project-title-row {
   display: flex;
   align-items: center;
