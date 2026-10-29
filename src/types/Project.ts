@@ -12,5 +12,4 @@ export interface Project {
   features: string[];
   media: ProjectMedia[];
   demoUrl?: string;
-  sourceUrl?: string;
 }

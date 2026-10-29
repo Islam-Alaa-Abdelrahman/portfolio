@@ -1,5 +1,24 @@
 export function getProjectMedia(projectId: string) {
   switch (projectId) {
+    case 'parkida':
+      return [
+        {
+          src: '/projects/parkida/website.png',
+          alt: 'Parkida marketing website introducing its parking-management mobile app with illustrative demo views',
+          type: 'image' as const
+        },
+        {
+          src: '/projects/parkida/workflow.png',
+          alt: 'Parkida website walkthrough showing an illustrative vehicle check-in flow with synthetic demo data',
+          type: 'image' as const
+        }
+      ];
+    case 'civic-pm':
+      return [{
+        src: '/projects/civic-pm/homepage.png',
+        alt: 'CIVIC construction project-management website homepage',
+        type: 'image' as const
+      }];
     case 'beauty-shop':
       return [
         {
