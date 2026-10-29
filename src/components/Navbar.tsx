@@ -1,97 +1,83 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useTheme } from 'next-themes'
-import Link from 'next/link'
-import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi'
-import { motion, AnimatePresence } from 'framer-motion'
-
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <Link 
-    href={href} 
-    className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-  >
-    {children}
-  </Link>
-)
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { profile } from "@/lib/profile";
+import Arrow from "./Arrow";
 
 export default function Navbar() {
-  const [mounted, setMounted] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  useEffect(() => setMounted(true), []);
   return (
-    <nav className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 py-4">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold">
-          Islam Abdelrahman
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#skills">Skills</NavLink>
-          <NavLink href="#projects">Projects</NavLink>
-          <NavLink href="#contact">Contact</NavLink>
-          
+    <header className="site-header">
+      <div className="shell nav-shell">
+        <a
+          href="#hero"
+          className="wordmark"
+          aria-label="Islam Abdelrahman home"
+        >
+          ia<span>.</span>
+          <small>
+            ISLAM
+            <br />
+            ABDELRAHMAN
+          </small>
+        </a>
+        <nav
+          id="primary-navigation"
+          className={open ? "main-nav is-open" : "main-nav"}
+          aria-label="Main navigation"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setOpen(false);
+          }}
+        >
+          {[
+            ["projects", "Work"],
+            ["about", "About"],
+            ["skills", "Expertise"],
+            ["contact", "Contact"],
+          ].map(([id, label]) => (
+            <a key={id} href={"#" + id} onClick={() => setOpen(false)}>
+              {label}
+            </a>
+          ))}
+        </nav>
+        <div className="nav-actions">
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle theme"
+            className="theme-toggle"
+            disabled={!mounted}
+            onClick={() =>
+              setTheme(resolvedTheme === "dark" ? "light" : "dark")
+            }
+            aria-label={
+              mounted && resolvedTheme === "dark"
+                ? "Switch to light theme"
+                : "Switch to dark theme"
+            }
           >
-            {theme === 'dark' ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
+            <span aria-hidden="true">◐</span>
+          </button>
+          <a
+            className="resume-link"
+            href={profile.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Résumé <Arrow diagonal />
+          </a>
+          <button
+            className="menu-toggle"
+            aria-expanded={open}
+            aria-controls="primary-navigation"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? "Close" : "Menu"}{" "}
+            <span aria-hidden="true">{open ? "−" : "+"}</span>
           </button>
         </div>
-
-        {/* Mobile Navigation Toggle */}
-        <button
-          className="md:hidden p-2"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
-        </button>
       </div>
-
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-white dark:bg-gray-900 py-4 px-4 md:hidden"
-          >
-            <div className="flex flex-col space-y-4">
-              <NavLink href="#about">About</NavLink>
-              <NavLink href="#skills">Skills</NavLink>
-              <NavLink href="#projects">Projects</NavLink>
-              <NavLink href="#contact">Contact</NavLink>
-              
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="flex items-center gap-2 text-gray-700 dark:text-gray-200"
-              >
-                {theme === 'dark' ? (
-                  <>
-                    <FiSun className="w-5 h-5" /> Light Mode
-                  </>
-                ) : (
-                  <>
-                    <FiMoon className="w-5 h-5" /> Dark Mode
-                  </>
-                )}
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  )
+    </header>
+  );
 }

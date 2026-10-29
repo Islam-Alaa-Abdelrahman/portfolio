@@ -1,82 +1,109 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { FiGithub, FiLinkedin, FiMail, FiPhone } from 'react-icons/fi'
-
-const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label: string }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-    aria-label={label}
-  >
-    <Icon className="w-5 h-5" />
-    <span>{label}</span>
-  </a>
-)
+import Image from "next/image";
+import Arrow from "./Arrow";
+import { profile } from "@/lib/profile";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center pt-16 section-padding" id="hero">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Hi, I'm Islam Abdelrahman
-            <span className="block text-blue-600 dark:text-blue-400 mt-2">
-              Software Engineer
-            </span>
+    <section className="hero shell" id="hero" aria-labelledby="hero-heading">
+      <div className="hero-eyebrow">
+        <span>
+          <i className="status-dot" /> SOFTWARE ENGINEER / FULL STACK
+        </span>
+        <span>
+          DUBAI, UAE <span aria-hidden="true">↗</span>
+        </span>
+      </div>
+      <div className="hero-layout">
+        <div className="hero-copy">
+          <h1 id="hero-heading">
+            The details
+            <br />
+            make the
+            <br />
+            <em>difference.</em>
           </h1>
-          
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-            Passionate about creating impactful web applications with modern technologies.
-            Specializing in full-stack development with Next.js, React, and TypeScript.
+          <p>
+            I’m Islam. I build thoughtful web applications,
+            <br className="desktop-break" /> from the first interaction to the
+            logic behind it.
           </p>
-
-          <div className="flex flex-col md:flex-row gap-6">
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-            >
-              Get in Touch
-            </motion.a>
-
-            <motion.a
-              href="#projects"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 dark:border-gray-700 text-base font-medium rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-            >
-              View Projects
-            </motion.a>
+          <a href="#projects" className="action-link">
+            Explore selected work{" "}
+            <span className="circle-arrow">
+              <Arrow />
+            </span>
+          </a>
+        </div>
+        <a
+          href="#projects"
+          className="hero-feature"
+          aria-label="Explore Fullashes, my featured e-commerce project"
+        >
+          <div className="feature-coordinate">
+            <span>SELECTED BUILD — 01</span>
+            <span>FULLASHES ↗</span>
           </div>
-
-          <div className="mt-12 flex flex-col md:flex-row gap-6">
-            <SocialLink 
-              href="https://www.linkedin.com/in/islam-abdelrahman-2b526523a/"
-              icon={FiLinkedin}
-              label="LinkedIn"
-            />
-            <SocialLink 
-              href="mailto:Islam_Abdelrahman@outlook.com"
-              icon={FiMail}
-              label="Email"
-            />
-            <SocialLink 
-              href="tel:+971551417445"
-              icon={FiPhone}
-              label="+971 55 141 7445"
-            />
+          <div className="feature-stage">
+            <span className="stage-grid" aria-hidden="true" />
+            <span className="stage-orbit" aria-hidden="true" />
+            <div className="hero-browser">
+              <div className="browser-bar">
+                <span>● ● ●</span>
+                <span>fullashes / storefront</span>
+                <span>↗</span>
+              </div>
+              <Image
+                src="/projects/beauty-shop/media/Screenshot_24.png"
+                alt="Fullashes beauty store homepage"
+                width={1905}
+                height={935}
+                sizes="(max-width: 760px) 85vw, 44vw"
+                priority
+              />
+            </div>
+            <div className="hero-browser hero-browser-front">
+              <div className="browser-bar">
+                <span>● ● ●</span>
+                <span>product discovery</span>
+                <span>↗</span>
+              </div>
+              <Image
+                src="/projects/beauty-shop/media/Screenshot_3.png"
+                alt="Fullashes product catalog with search and filters"
+                width={1905}
+                height={946}
+                sizes="(max-width: 760px) 65vw, 31vw"
+                priority
+              />
+            </div>
+            <div className="build-stamp">
+              <span>UI</span>
+              <i>↔</i>
+              <span>DATA</span>
+            </div>
           </div>
-        </motion.div>
+          <div className="feature-bottom">
+            <span>COMMERCE, FROM END TO END.</span>
+            <span>
+              VIEW PROJECT <Arrow diagonal />
+            </span>
+          </div>
+        </a>
+      </div>
+      <div className="hero-baseline">
+        <span>DESIGN MINDED. ENGINEERING LED.</span>
+        <div>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+            LinkedIn ↗
+          </a>
+        </div>
+        <a href="#projects" className="scroll-cue">
+          SCROLL TO DISCOVER <span>↓</span>
+        </a>
       </div>
     </section>
-  )
+  );
 }
