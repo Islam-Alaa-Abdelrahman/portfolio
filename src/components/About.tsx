@@ -27,6 +27,10 @@ export default function About() {
               <p className="text-gray-600 dark:text-gray-300">
                 Microsoft Power Platform Fundamentals
               </p>
+              <p className="text-gray-600 dark:text-gray-300 mt-4">
+                Society of Engineers – UAE
+                <span className="block text-sm mt-1">Member</span>
+              </p>
               <h3 className="text-xl font-semibold mt-6 mb-3">
                 Beyond development
               </h3>

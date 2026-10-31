@@ -9,6 +9,31 @@ import ProjectGallery from "./ProjectGallery";
 import { Project } from "@/types/Project";
 import { getProjectMedia } from "@/utils/mediaUtils";
 
+const projectDetails: Record<string, { engineering: { title: string; description: string }[]; validation: string }> = {
+  "parkida": {
+    engineering: [
+      { title: "Recovering work after a connection failure", description: "Parking operations are queued on the device and retried with capped exponential backoff. Server-side idempotency checks and Firestore transactions protect against applying the same operation twice." },
+      { title: "Protecting pending operations", description: "The storage adapter checks persisted queue data before writing. If the data is corrupt, it refuses the write and preserves the original bytes rather than silently replacing pending work with an empty queue." },
+      { title: "A separate bilingual product website", description: "The Next.js marketing site has English and Arabic routes, RTL-aware keyboard navigation, and an interactive parking walkthrough. Its product illustrations use synthetic data; they are not customer records." },
+    ],
+    validation: "Regression tests cover queue corruption and storage failures. The separate website includes Playwright navigation checks and axe accessibility scans for English and Arabic at mobile and desktop widths. The mobile application remains in pre-release development.",
+  },
+  "civic-pm": {
+    engineering: [
+      { title: "Connecting procurement to the project", description: "Procurement workflows link material requests, quotations, purchase orders, and goods receipts to project records. Work breakdown references are checked through the project service, keeping module responsibilities explicit." },
+      { title: "Opening the right building-model version", description: "The IFC viewer loads the current document version through an authorized download URL. It handles missing versions and access errors, and disposes of the viewer when the user leaves the page." },
+    ],
+    validation: "The repository includes contract, integration, and viewer tests. A documented validation checkpoint confirms application route wiring while identifying live database, identity-provider, and storage flows as requiring further end-to-end verification.",
+  },
+  "beauty-shop": {
+    engineering: [
+      { title: "Connecting checkout and store operations", description: "Server routes connect payment capture to order records, stock updates, and cart removal. Customer and administration interfaces use the same product and order models." },
+      { title: "Turning orders into an administration view", description: "The dashboard checks the user's administrator role and aggregates order data into revenue, order counts, and top-selling products. Product imagery is managed through Cloudinary." },
+    ],
+    validation: "The public preview demonstrates the storefront. Payment integration and administration are implemented in the codebase; the preview is not presented as evidence of production payment verification or commercial sales.",
+  },
+};
+
 const projects: Omit<Project, "media">[] = [
   {
     id: "parkida",
@@ -156,6 +181,24 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 ))}
               </ul>
             </div>
+
+            <details className="rounded-lg border border-gray-200 dark:border-gray-700">
+              <summary className="cursor-pointer rounded-lg px-4 py-4 font-semibold text-blue-700 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-gray-800">
+                Engineering details
+              </summary>
+              <div className="space-y-5 px-4 pb-5">
+                {projectDetails[project.id].engineering.map((detail) => (
+                  <div key={detail.title}>
+                    <h5 className="mb-1 font-semibold">{detail.title}</h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{detail.description}</p>
+                  </div>
+                ))}
+                <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
+                  <h5 className="mb-1 font-semibold">Testing &amp; current status</h5>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{projectDetails[project.id].validation}</p>
+                </div>
+              </div>
+            </details>
 
             <div className="flex flex-wrap gap-4 mt-6">
               <button
